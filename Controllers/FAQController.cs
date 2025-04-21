@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
 {
+
+    // Endpoint: http://localhost:5041/api/faq
     [ApiController]
     [Route("api/[controller]")]
     public class FAQController : ControllerBase

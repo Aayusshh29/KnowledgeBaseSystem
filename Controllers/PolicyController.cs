@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Backend.Controllers
 {
+    // Endpoint: http://localhost:5041/api/policy
     [ApiController]
     [Route("api/[controller]")]
     public class PolicyController : ControllerBase

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Backend.Controllers
 {
+    // Endpoint: http://localhost:5041/api/procedure
     [ApiController]
     [Route("api/[controller]")]
     public class ProcedureController : ControllerBase
