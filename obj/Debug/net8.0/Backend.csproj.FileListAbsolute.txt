@@ -105,3 +105,4 @@ C:\Users\aayush.dhamdhere_jad\source\repos\Backend\Backend\obj\Debug\net8.0\refi
 C:\Users\aayush.dhamdhere_jad\source\repos\Backend\Backend\obj\Debug\net8.0\Backend.pdb
 C:\Users\aayush.dhamdhere_jad\source\repos\Backend\Backend\obj\Debug\net8.0\Backend.genruntimeconfig.cache
 C:\Users\aayush.dhamdhere_jad\source\repos\Backend\Backend\obj\Debug\net8.0\ref\Backend.dll
+C:\Users\aayush.dhamdhere_jad\source\repos\Backend\Backend\obj\Debug\net8.0\Backend.sourcelink.json

@@ -2,6 +2,7 @@
 using Backend.Models;
 using Backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity; // Import this for PasswordHasher
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,10 +11,12 @@ namespace Backend.Services
     public class UserService : IUserService
     {
         private readonly ApplicationDbContext _context;
+        private readonly PasswordHasher<User> _passwordHasher;
 
         public UserService(ApplicationDbContext context)
         {
             _context = context;
+            _passwordHasher = new PasswordHasher<User>();
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
@@ -28,10 +31,16 @@ namespace Backend.Services
 
         public async Task<User> CreateUserAsync(User user)
         {
+            if (!string.IsNullOrWhiteSpace(user.Password))
+            {
+                user.Password = _passwordHasher.HashPassword(user, user.Password);
+            }
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return user;
         }
+
 
         public async Task<User?> UpdateUserAsync(int id, User updatedUser)
         {
@@ -41,7 +50,12 @@ namespace Backend.Services
             existingUser.Name = updatedUser.Name;
             existingUser.Email = updatedUser.Email;
             existingUser.Role = updatedUser.Role;
-            existingUser.Password = updatedUser.Password;
+
+            // Only hash password if it's not empty or null
+            if (!string.IsNullOrWhiteSpace(updatedUser.Password))
+            {
+                existingUser.Password = _passwordHasher.HashPassword(existingUser, updatedUser.Password);
+            }
 
             await _context.SaveChangesAsync();
             return existingUser;
