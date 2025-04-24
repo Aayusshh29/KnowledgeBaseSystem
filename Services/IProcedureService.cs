@@ -1,4 +1,5 @@
-﻿using Backend.Models;
+﻿using Backend.Dtos;
+using Backend.Models;
 
 namespace Backend.Services.Interfaces
 {
@@ -6,8 +7,11 @@ namespace Backend.Services.Interfaces
     {
         Task<IEnumerable<Procedure>> GetAllProceduresAsync();
         Task<Procedure?> GetProcedureByIdAsync(int id);
-        Task<Procedure> CreateProcedureAsync(Procedure procedure);
-        Task<Procedure?> UpdateProcedureAsync(int id, Procedure updatedProcedure);
+
+        // actor = user performing the action (e.g. HttpContext.User.Identity.Name ?? "system")
+        Task<Procedure> CreateProcedureAsync(ProcedureCreateDto dto, string actor);
+        Task<Procedure?> UpdateProcedureAsync(int id, ProcedureUpdateDto dto, string actor);
+
         Task<bool> DeleteProcedureAsync(int id);
     }
 }

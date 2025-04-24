@@ -1,4 +1,4 @@
-﻿using Backend.Models;
+﻿using Backend.Dtos;
 using Backend.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -12,12 +12,15 @@ namespace Backend.Controllers
     {
         private readonly IProcedureService _procedureService;
 
-        public ProcedureController(IProcedureService procedureService)
-        {
+        public ProcedureController(IProcedureService procedureService) =>
             _procedureService = procedureService;
-        }
 
+        // helper – who is making the call? Defaults to "system" if the actor is not available.
+        private string Actor => User?.Identity?.Name ?? "system";
+
+        // ------------------------------------------------------------
         // GET: api/procedure
+        // ------------------------------------------------------------
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -25,39 +28,52 @@ namespace Backend.Controllers
             return Ok(procedures);
         }
 
+        // ------------------------------------------------------------
         // GET: api/procedure/{id}
-        [HttpGet("{id}")]
+        // ------------------------------------------------------------
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
             var procedure = await _procedureService.GetProcedureByIdAsync(id);
-            if (procedure == null) return NotFound();
-            return Ok(procedure);
+            return procedure is null ? NotFound() : Ok(procedure);
         }
 
+        // ------------------------------------------------------------
         // POST: api/procedure
+        // Body → ProcedureCreateDto
+        // ------------------------------------------------------------
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Procedure procedure)
+        public async Task<IActionResult> Create([FromBody] ProcedureCreateDto dto)
         {
-            var createdProcedure = await _procedureService.CreateProcedureAsync(procedure);
-            return CreatedAtAction(nameof(GetById), new { id = createdProcedure.Id }, createdProcedure);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            // Create procedure with the actor information for CreatedBy and CreatedAt
+            var created = await _procedureService.CreateProcedureAsync(dto, Actor);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
+        // ------------------------------------------------------------
         // PUT: api/procedure/{id}
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Procedure procedure)
+        // Body → ProcedureUpdateDto (no audit fields)
+        // ------------------------------------------------------------
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, [FromBody] ProcedureUpdateDto dto)
         {
-            var updatedProcedure = await _procedureService.UpdateProcedureAsync(id, procedure);
-            if (updatedProcedure == null) return NotFound();
-            return Ok(updatedProcedure);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            // Update procedure with the actor information for LastUpdatedAt and LastUpdatedBy
+            var updated = await _procedureService.UpdateProcedureAsync(id, dto, Actor);
+            return updated is null ? NotFound() : Ok(updated);
         }
 
+        // ------------------------------------------------------------
         // DELETE: api/procedure/{id}
-        [HttpDelete("{id}")]
+        // ------------------------------------------------------------
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _procedureService.DeleteProcedureAsync(id);
-            if (!result) return NotFound();
-            return NoContent();
+            var ok = await _procedureService.DeleteProcedureAsync(id);
+            return ok ? NoContent() : NotFound();
         }
     }
 }

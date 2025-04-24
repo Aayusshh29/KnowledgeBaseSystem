@@ -2,7 +2,9 @@
 using Backend.Models;
 using Backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace Backend.Services
@@ -16,6 +18,10 @@ namespace Backend.Services
             _context = context;
         }
 
+        private static string NowIstFormatted() =>
+            TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"))
+            .ToString("dd/MM/yyyy hh:mm tt", new CultureInfo("en-IN"));
+
         public async Task<IEnumerable<PolicyRequest>> GetAllPolicyRequestsAsync()
         {
             return await _context.PolicyRequests.ToListAsync();  // No need to include RequestedBy
@@ -28,6 +34,9 @@ namespace Backend.Services
 
         public async Task<PolicyRequest> CreatePolicyRequestAsync(PolicyRequest policyRequest)
         {
+            // Automatically set the requested time to the current IST time as string
+            policyRequest.RequestedAt = NowIstFormatted();
+
             _context.PolicyRequests.Add(policyRequest);
             await _context.SaveChangesAsync();
             return policyRequest;

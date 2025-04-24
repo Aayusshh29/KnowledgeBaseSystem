@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string? Title { get; set; }
         public string? Content { get; set; }
-        public DateTime RequestedAt { get; set; }
+        public string? RequestedAt { get; set; } // Change from DateTime to string
         public string? Status { get; set; }
         public int RequestedById { get; set; }  // Keep this field
 

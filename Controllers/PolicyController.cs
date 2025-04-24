@@ -59,7 +59,7 @@ namespace Backend.Controllers
         public async Task<IActionResult> Create(Policy policy)
         {
             // Set CreatedAt automatically before saving the policy
-            policy.CreatedAt = DateTime.UtcNow;
+            policy.CreatedAt = DateTime.UtcNow.ToString("dd/MM/yyyy hh:mm tt");  // Format current time for IST
 
             var createdPolicy = await _policyService.CreatePolicyAsync(policy);
             return CreatedAtAction(nameof(GetById), new { id = createdPolicy.Id }, createdPolicy);
