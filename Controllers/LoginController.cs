@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace Backend.Controllers
 {
+
+    //Endpoint : http://localhost:5041/api/login
     [ApiController]
     [Route("api/[controller]")]
     public class LoginController : ControllerBase
@@ -19,14 +21,14 @@ namespace Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] Login Login)
         {
-            var result = await _loginService.LoginAsync(Login);
+            var user = await _loginService.LoginAsync(Login);
 
-            if (result == "User login successful")
+            if (user != null)
             {
-                return Ok(new { message = result });
+                return Ok(user); // Return full user info
             }
 
-            return Unauthorized(new { message = result });
+            return Unauthorized(new { message = "Invalid email or password" });
         }
     }
 }

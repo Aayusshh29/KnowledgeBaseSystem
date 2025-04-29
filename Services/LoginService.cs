@@ -18,24 +18,24 @@ namespace Backend.Services
             _passwordHasher = new PasswordHasher<User>();
         }
 
-        public async Task<string> LoginAsync(Login Login)
+        public async Task<User?> LoginAsync(Login Login)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == Login.Email);
             if (user == null)
             {
-                return "Invalid email or password";
+                return null;
             }
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.Password!, Login.Password);
 
             if (result == PasswordVerificationResult.Success)
             {
-                return "User login successful";
+                // Do NOT expose password
+                user.Password = null;
+                return user;
             }
-            else
-            {
-                return "Invalid email or password";
-            }
+
+            return null;
         }
     }
 }
