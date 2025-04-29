@@ -50,6 +50,8 @@ namespace Backend.Services
             existingUser.Name = updatedUser.Name;
             existingUser.Email = updatedUser.Email;
             existingUser.Department = updatedUser.Department;
+            existingUser.Role = updatedUser.Role;
+
 
             // Only hash password if it's not empty or null
             if (!string.IsNullOrWhiteSpace(updatedUser.Password))

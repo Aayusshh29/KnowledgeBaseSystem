@@ -13,6 +13,8 @@ builder.Services.AddScoped<IPolicyService, PolicyService>();
 builder.Services.AddScoped<IProcedureService, ProcedureService>();
 builder.Services.AddScoped<IPolicyRequestService, PolicyRequestService>();
 builder.Services.AddScoped<IFAQService, FAQService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
+
 
 
 // ✅ Add this for MySQL connection

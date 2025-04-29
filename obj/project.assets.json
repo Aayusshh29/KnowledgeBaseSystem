@@ -2273,11 +2273,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aayush.dhamdhere_jad\\source\\repos\\Backend\\Backend\\Backend.csproj",
+      "projectUniqueName": "C:\\Users\\aayush.dhamdhere_jad\\source\\repos\\Knowledge-Base-System\\Backend\\Backend.csproj",
       "projectName": "Backend",
-      "projectPath": "C:\\Users\\aayush.dhamdhere_jad\\source\\repos\\Backend\\Backend\\Backend.csproj",
+      "projectPath": "C:\\Users\\aayush.dhamdhere_jad\\source\\repos\\Knowledge-Base-System\\Backend\\Backend.csproj",
       "packagesPath": "C:\\Users\\aayush.dhamdhere_jad\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aayush.dhamdhere_jad\\source\\repos\\Backend\\Backend\\obj\\",
+      "outputPath": "C:\\Users\\aayush.dhamdhere_jad\\source\\repos\\Knowledge-Base-System\\Backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
