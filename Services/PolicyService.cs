@@ -34,7 +34,9 @@ namespace Backend.Services
                     Id = p.Id,
                     Title = p.Title,
                     Content = p.Content,
+                    Department = p.Department,
                     CreatedAt = p.CreatedAt,  // Stored as a formatted string
+                    LastUpdatedAt = p.LastUpdatedAt,
                     CreatedById = p.CreatedById
                 }).ToListAsync();
         }
@@ -49,7 +51,9 @@ namespace Backend.Services
                     Id = p.Id,
                     Title = p.Title,
                     Content = p.Content,
+                    Department = p.Department,
                     CreatedAt = p.CreatedAt,  // Stored as a formatted string
+                    LastUpdatedAt = p.LastUpdatedAt,
                     CreatedById = p.CreatedById
                 }).FirstOrDefaultAsync();
         }
@@ -73,6 +77,7 @@ namespace Backend.Services
 
             existingPolicy.Title = updatedPolicy.Title;
             existingPolicy.Content = updatedPolicy.Content;
+            existingPolicy.Department = updatedPolicy.Department;
             existingPolicy.CreatedById = updatedPolicy.CreatedById;
 
             // Update LastUpdatedAt to the current IST time

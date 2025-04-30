@@ -40,6 +40,13 @@ namespace Backend.Controllers
             return Ok(policyRequest);  // Returning the specific policy request by id
         }
 
+        [HttpGet("user/{requestedById}")]
+        public async Task<IActionResult> GetByRequestedById(int requestedById)
+        {
+            var policyRequests = await _policyRequestService.GetPolicyRequestsByRequestedByIdAsync(requestedById);
+            return Ok(policyRequests);  // Returning the list of policy requests by requestedById
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PolicyRequest policyRequest)
         {

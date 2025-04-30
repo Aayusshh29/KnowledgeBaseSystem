@@ -27,9 +27,11 @@ namespace Backend.Controllers
             {
                 p.Id,
                 p.Title,
+                p.Department,
                 p.Content,
                 p.CreatedAt,
-                p.CreatedById // Exclude CreatedBy
+                p.LastUpdatedAt,
+                p.CreatedById
             }).ToList();
 
             return Ok(result);
@@ -46,9 +48,11 @@ namespace Backend.Controllers
             {
                 policy.Id,
                 policy.Title,
+                policy.Department,
                 policy.Content,
                 policy.CreatedAt,
-                policy.CreatedById // Exclude CreatedBy
+                policy.LastUpdatedAt,
+                policy.CreatedById
             };
 
             return Ok(result);

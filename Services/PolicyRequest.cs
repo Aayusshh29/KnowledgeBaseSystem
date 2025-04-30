@@ -32,6 +32,13 @@ namespace Backend.Services
             return await _context.PolicyRequests.FirstOrDefaultAsync(r => r.Id == id);
         }
 
+        public async Task<IEnumerable<PolicyRequest>> GetPolicyRequestsByRequestedByIdAsync(int requestedById)
+        {
+            return await _context.PolicyRequests
+                .Where(pr => pr.RequestedById == requestedById)
+                .ToListAsync();
+        }
+
         public async Task<PolicyRequest> CreatePolicyRequestAsync(PolicyRequest policyRequest)
         {
             // Automatically set the requested time to the current IST time as string

@@ -9,5 +9,6 @@ namespace Backend.Services.Interfaces
         Task<PolicyRequest> CreatePolicyRequestAsync(PolicyRequest policyRequest);
         Task<PolicyRequest?> UpdatePolicyRequestAsync(int id, PolicyRequest updatedPolicyRequest);
         Task<bool> DeletePolicyRequestAsync(int id);
+        Task<IEnumerable<PolicyRequest>> GetPolicyRequestsByRequestedByIdAsync(int requestedById);
     }
 }

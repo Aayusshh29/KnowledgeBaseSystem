@@ -5,6 +5,17 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure CORS with more permissive settings for development
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        builder => builder
+            .AllowAnyOrigin()     // Allow requests from any origin during development
+            .AllowAnyMethod()     // Allow any HTTP method
+            .AllowAnyHeader()     // Allow any HTTP headers
+    );
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -14,8 +25,6 @@ builder.Services.AddScoped<IProcedureService, ProcedureService>();
 builder.Services.AddScoped<IPolicyRequestService, PolicyRequestService>();
 builder.Services.AddScoped<IFAQService, FAQService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
-
-
 
 // ✅ Add this for MySQL connection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -33,11 +42,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// Add CORS middleware before HTTP redirection and other middleware
+app.UseCors("AllowFrontend");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
